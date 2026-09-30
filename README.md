@@ -57,25 +57,50 @@ If activation is restricted, use the environment's Python executable directly:
 .\venv\Scripts\python.exe
 3. Install dependencies
 pip install -r requirements.txt
-4. Configure environment variables
+### 4. Configure environment variables
 
-Create a .env file in the project root. Add the database settings expected by settings.py and docker-compose.yml:
+Create a `.env` file in the project root by copying `.env.example`.
 
-POSTGRES_DB=your_database_name
-POSTGRES_USER=your_database_user
-POSTGRES_PASSWORD=your_secure_password
+**Windows PowerShell:**
 
-Use your own local values. Do not commit .env or real credentials to version control.
+```powershell
+Copy-Item .env.example .env
+```
 
-5. Start PostgreSQL
+Open the `.env` file and replace the placeholder values with your own database credentials and a securely generated Django secret key.
+
+The following environment variables are required:
+
+- `DJANGO_SECRET_KEY`
+- `POSTGRES_DB`
+- `POSTGRES_USER`
+- `POSTGRES_PASSWORD`
+- `POSTGRES_HOST`
+- `POSTGRES_PORT`
+
+**Security:** Never commit your `.env` file or share your actual credentials. The `.env.example` file contains placeholders only.
+
+### 5. Start PostgreSQL
+
+Start the PostgreSQL database using Docker Compose:
+
+```powershell
 docker compose up -d
-6. Apply database migrations
+```
+
+### 6. Apply database migrations
+
+```powershell
 python manage.py migrate
-7. Start the development server
+```
+
+### 7. Start the development server
+
+```powershell
 python manage.py runserver
+```
 
 The API will be available at:
-
 http://127.0.0.1:8000/
 
 API Endpoints
